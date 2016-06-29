@@ -2,12 +2,22 @@ package pl.cafebabe.kebab.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 public class Menu {
 
+	private Date aktualnosc;
 	private Restauracja restauracja;
 	private String tytul;
-	private Collection<Pozycja> pozycje;
+	private Collection<Grupa> grupy;
+
+	public Date getAktualnosc() {
+		return aktualnosc;
+	}
+
+	public void setAktualnosc(Date aktualnosc) {
+		this.aktualnosc = aktualnosc;
+	}
 
 	public Restauracja getRestauracja() {
 		return restauracja;
@@ -25,11 +35,11 @@ public class Menu {
 		this.tytul = tytul;
 	}
 
-	public Collection<Pozycja> getPozycje() {
-		if (pozycje == null) {
-			pozycje = new ArrayList<>();
+	public Collection<Grupa> getGrupy() {
+		if (grupy == null) {
+			grupy = new ArrayList<>();
 		}
-		return pozycje;
+		return grupy;
 	}
 
 }

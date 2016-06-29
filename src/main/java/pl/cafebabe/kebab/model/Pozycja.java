@@ -1,9 +1,14 @@
 package pl.cafebabe.kebab.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class Pozycja {
 
 	private String nazwa;
-	private Cena cena;
+	// TODO parsowanie opisu
+	private String opis;
+	private Collection<Wariant> warianty;
 
 	public String getNazwa() {
 		return nazwa;
@@ -13,12 +18,19 @@ public class Pozycja {
 		this.nazwa = nazwa;
 	}
 
-	public Cena getCena() {
-		return cena;
+	public String getOpis() {
+		return opis;
 	}
 
-	public void setCena(Cena cena) {
-		this.cena = cena;
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public Collection<Wariant> getWarianty() {
+		if (warianty == null) {
+			warianty = new ArrayList<>();
+		}
+		return warianty;
 	}
 
 }

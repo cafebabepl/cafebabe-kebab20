@@ -5,7 +5,15 @@ import java.math.BigDecimal;
 public class Cena {
 
 	private BigDecimal kwota;
-	private String waluta;
+	private Waluta waluta;
+
+	public Cena() {
+	}
+
+	public Cena(BigDecimal kwota, Waluta waluta) {
+		this.kwota = kwota;
+		this.waluta = waluta;
+	}
 
 	public BigDecimal getKwota() {
 		return kwota;
@@ -15,11 +23,11 @@ public class Cena {
 		this.kwota = kwota;
 	}
 
-	public String getWaluta() {
+	public Waluta getWaluta() {
 		return waluta;
 	}
 
-	public void setWaluta(String waluta) {
+	public void setWaluta(Waluta waluta) {
 		this.waluta = waluta;
 	}
 

@@ -12,7 +12,8 @@ import pl.cafebabe.kebab.CamelPizzaKebapParser;
 import pl.cafebabe.kebab.model.*;
 
 @Path("/")
-@Produces({ "application/json" })
+//@Produces({ "application/json" })
+@Produces({ "application/json;charset=utf-8"})
 public class MenuService {
 
 	@GET

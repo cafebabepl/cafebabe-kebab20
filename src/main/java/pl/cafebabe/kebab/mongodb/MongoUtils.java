@@ -29,7 +29,8 @@ public class MongoUtils {
 
 		// try (MongoClient mongoClient = new MongoClient("127.0.0.1", 27017)) {
 		// try (MongoClient mongoClient = new MongoClient(new ServerAddress("127.0.0.1", 27017), options)) {
-		MongoClient mongoClient = new MongoClient(new ServerAddress("127.0.0.1", 27017), credentials, options);
+//		MongoClient mongoClient = new MongoClient(new ServerAddress("127.0.0.1", 27017), credentials, options);
+		MongoClient mongoClient = new MongoClient(new ServerAddress("127.6.149.130", 27017), credentials, options);
 		return mongoClient;
 	}
 

@@ -40,7 +40,6 @@ public class MenuMongoTest {
 			MongoDatabase database = mongoClient.getDatabase("kebab20");
 			MongoCollection<Document> col = database.getCollection("menu");
 			
-//			Document document = new Document("menu-" + System.currentTimeMillis(), menu);
 			Document document = new Document("tresc", menu);
 			col.insertOne(document);			
 			
@@ -48,8 +47,6 @@ public class MenuMongoTest {
 			for (Document i : col.find()) {
 				System.out.println(i.toJson());
 			}
-			
-//			col.find().sort(new Bson())
 			
 		}
 	}

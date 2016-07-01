@@ -1,0 +1,29 @@
+WildFly 10 administrator added.  Please make note of these credentials:
+
+   Username: adminbATl3s5
+   Password: a3Q9RKgNxEHF
+   
+   run 'rhc port-forward kebab20' to access the web admin area on port 9990.
+
+Your application has been created. Continue to the application overview page.
+
+Making code changes
+Install the Git client for your operating system, and from your command line run
+
+git clone ssh://576cf8cf7628e12c1a00005a@kebab20-cafebabepl.rhcloud.com/~/git/kebab20.git/
+cd kebab20/
+This will create a folder with the source code of your application. After making a change, add, commit, and push your changes.
+
+git add .
+git commit -m 'My changes'
+git push
+When you push changes the OpenShift server will report back its status on deploying your code. The server will run any of your configured deploy hooks and then restart the application.
+
+
+MongoDB 2.4 database added.  Please make note of these credentials:
+
+   Root User:     admin
+   Root Password: iZ6T3PViNyrz
+   Database Name: kebab20
+
+Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/

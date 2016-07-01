@@ -1,4 +1,4 @@
-package pl.cafebabe.kebab;
+package pl.cafebabe.kebab.parser;
 
 import java.io.File;
 import java.math.BigDecimal;

@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.bson.Document;
+import org.jongo.Jongo;
 
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
@@ -26,9 +27,7 @@ import pl.cafebabe.kebab.parser.CamelPizzaKebapParser;
 @Produces({ "application/json;charset=utf-8"})
 public class MenuService {
 
-	@GET
-	@Path("menu")
-	public Menu menu() throws Exception {
+	public Menu menu1() throws Exception {
 		// A. parsowanie za każdym razem
 		//TODO Inject
 //		CamelPizzaKebapParser parser = new CamelPizzaKebapParser();
@@ -42,8 +41,21 @@ public class MenuService {
 			MongoCollection<Document> col = client.getDatabase("kebab20").getCollection("menu");
 			Document doc = col.find().sort(Sorts.descending("_id")).limit(1).first();
 			String tresc = doc.get("tresc", String.class);
-			Gson gson = new Gson();;
+			Gson gson = new Gson();
 			Menu menu = gson.fromJson(tresc, Menu.class);
+			return menu;
+		}
+	}
+
+	@GET
+	@Path("menu")
+	public Menu menu2() throws Exception {
+		try (MongoClient client = MongoUtils.getMongoClient()) {
+			@SuppressWarnings("deprecation")
+			Jongo jongo = new Jongo(client.getDB("kebab20"));
+			org.jongo.MongoCollection menus2 = jongo.getCollection("menu-jongo");
+			Menu menu = menus2.findOne().orderBy("{aktualnosc: -1}").as(Menu.class);
+			//TODO jak Jackson datę parsuje do w jax-rs dostaję liczbę!
 			return menu;
 		}
 	}
@@ -60,4 +72,24 @@ public class MenuService {
 		}
 		return Collections.emptyList();
 	}
+	
+	@GET
+	@Path("test")
+	public Menu test() throws Exception {
+		
+		Jongo jongo = new Jongo(MongoUtils.getMongoClient().getDB("kebab20"));
+		org.jongo.MongoCollection menus = jongo.getCollection("menu");
+//		menus.findOne().
+		
+		// TODO to jest bardzo brzydkie, nauczyć mongoquery, przerobić na DTO/Biznes
+		// B. pobranie z bazy
+		try (MongoClient client = MongoUtils.getMongoClient()) {
+			MongoCollection<Document> col = client.getDatabase("kebab20").getCollection("menu");
+			Document doc = col.find().sort(Sorts.descending("_id")).limit(1).first();
+			String tresc = doc.get("tresc", String.class);
+			Gson gson = new Gson();
+			Menu menu = gson.fromJson(tresc, Menu.class);
+			return menu;
+		}
+	}	
 }

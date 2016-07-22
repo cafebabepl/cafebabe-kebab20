@@ -79,7 +79,7 @@ public class CamelPizzaKebapParser {
 			Cena cena = new Cena();
 //			String kwota = x.replaceAll("zł", "").trim().replace(",", ".");			
 			String kwota = x.replaceAll("zł", "").replace((char) 160, ' ') .trim().replace(",", ".");
-			cena.setKwota(new BigDecimal(kwota));
+			cena.setKwota(new BigDecimal(kwota).setScale(2, BigDecimal.ROUND_HALF_UP));
 			cena.setWaluta(Waluta.PLN);
 			// TODO enum z walutami, a może JSR 354 - Currency and Money
 			return cena;

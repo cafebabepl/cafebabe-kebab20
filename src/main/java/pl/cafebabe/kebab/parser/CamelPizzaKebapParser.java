@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import pl.cafebabe.kebab.IMenuProvider;
 import pl.cafebabe.kebab.model.Cena;
 import pl.cafebabe.kebab.model.Grupa;
 import pl.cafebabe.kebab.model.Menu;
@@ -25,7 +26,7 @@ import pl.cafebabe.kebab.model.Wariant;
 
 //TODO trzeba zrobic wersjonowanie api v1, v2 itd.
 //TODO REST np. /menu/{restauracja}, /menu/{restaurcja}/{grupa} "/menu/camel/kebab"
-public class CamelPizzaKebapParser {
+public class CamelPizzaKebapParser implements IMenuProvider {
 
 	public static void parse() throws Exception {
 		File input = new File("c:/temp/KEBAP _ CamelPizza - Bydgoszcz.html");
@@ -49,6 +50,7 @@ public class CamelPizzaKebapParser {
 
 	}
 
+	@Override
 	public Menu getMenu() throws Exception {
 		Menu menu = new Menu();
 		menu.setAktualnosc(new Date());

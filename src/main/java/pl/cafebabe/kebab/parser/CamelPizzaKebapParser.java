@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -111,34 +113,56 @@ public class CamelPizzaKebapParser implements IMenuProvider {
 		for (int i = 0; i < e.size(); i++) {
 			Elements td = e.get(i).select("td");
 			final int c = td.size();
-			// warianty
-			if (i == 0) {
+
+			if (c >= 2) {
+				// warianty mogą występować jako wyszczególnione lub od razu może być pozycja
+				boolean w = false;
 				for (int j = 1; j < c; j++) {
-					warianty.add(td.get(j).text().trim());
-				}
-			} else {
-				if (c >= 2) {
-					String nazwaPozycji = td.get(0).text().trim();
-					if (StringUtils.isBlank(nazwaPozycji)) {
-						continue;
+					String t = td.get(j).text().trim();
+					if (t.endsWith("zł")) {
+						warianty.add(StringUtils.EMPTY);
+					} else {
+						warianty.add(t);
+						w = true;
 					}
-					Pozycja pozycja = new Pozycja();
-					pozycja.setNazwa(nazwaPozycji);
-					System.out.println(pozycja.getNazwa());
-					pozycja.setOpis(""); //TODO nazwa -> nazwa + opis
-					for (int j = 1; j < c; j++) {
-						String nazwaWariantu = warianty.get(j - 1);
-						String[] luby = nazwaWariantu.split(" lub ");
-						for (String lub : luby) {
-							Wariant wariant = new Wariant();
-							wariant.setOpis(lub.trim());
-							wariant.getCeny().add(parseCena(td.get(j).text()));
-							pozycja.getWarianty().add(wariant);
-						}
-					}
-					grupa.getPozycje().add(pozycja);
 				}
+
+				if (w) {
+					continue;
+				}
+
+				String nazwaPozycji = td.get(0).text().trim();
+				if (StringUtils.isBlank(nazwaPozycji)) {
+					continue;
+				}
+				
+				Pozycja pozycja = new Pozycja();
+//				Pattern pattern = Pattern.compile("(?<nazwa>\\d+\\.(.*))-(?<opis>.*)");
+//				Matcher matcher = pattern.matcher(nazwaPozycji);
+//				if (matcher.matches()) {
+//					pozycja.setNazwa(matcher.group("nazwa"));
+//					pozycja.setOpis(matcher.group("opis"));
+//				} else {
+//					pozycja.setNazwa(nazwaPozycji);
+//					pozycja.setOpis(StringUtils.EMPTY);
+//				}
+				pozycja.setNazwa(nazwaPozycji);
+				pozycja.setOpis(StringUtils.EMPTY);
+				
+				System.out.println(pozycja.getNazwa());
+				for (int j = 1; j < c; j++) {
+					String nazwaWariantu = warianty.get(j - 1);
+					String[] luby = nazwaWariantu.split(" lub ");
+					for (String lub : luby) {
+						Wariant wariant = new Wariant();
+						wariant.setOpis(lub.trim());
+						wariant.getCeny().add(parseCena(td.get(j).text()));
+						pozycja.getWarianty().add(wariant);
+					}
+				}
+				grupa.getPozycje().add(pozycja);
 			}
+			
 		}
 	
 		return grupa;

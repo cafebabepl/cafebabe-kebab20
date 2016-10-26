@@ -1,9 +1,14 @@
 package pl.cafebabe.kebab.exp;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationFactory;
 import org.bson.Document;
+import org.jongo.Aggregate;
 import org.jongo.Jongo;
+import org.jongo.ResultHandler;
 
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
@@ -14,6 +19,7 @@ import com.mongodb.client.model.Sorts;
 
 import pl.cafebabe.kebab.config.ConfigUtils;
 import pl.cafebabe.kebab.model.Menu;
+import pl.cafebabe.kebab.model.Restauracja;
 import pl.cafebabe.kebab.mongodb.MongoUtils;
 import pl.cafebabe.kebab.parser.CamelPizzaKebapParser;
 
@@ -108,10 +114,29 @@ public class MenuMongoTest {
 		System.out.println(c.getInt("mongodb.port"));
 	}
 	
+	public static void testJongoDistinct() throws Exception {
+
+		try (MongoClient mongoClient = MongoUtils.getMongoClient()) {
+			@SuppressWarnings("deprecation")
+			Jongo jongo = new Jongo(mongoClient.getDB("kebab20"));
+			org.jongo.MongoCollection menus2 = jongo.getCollection("menu-jongo");
+//			//Aggregate a = menus2.aggregate("[ { \"$group\" : { _id: null, count: { $sum: 1 } } } ]");
+//			System.out.println(a.toString());			
+			List<String> names = menus2.distinct("restauracja.nazwa").as(String.class);
+			System.out.println("Restauracje:");
+			names.forEach(i -> System.out.println(i));
+
+			List<Restauracja> r = menus2.distinct("restauracja").as(Restauracja.class);
+			//List<Restauracja> r = menus2.distinct("restauracja").query(WHERE).as(Restauracja.class);
+			System.out.println("Restauracje:");
+			r.forEach(i -> System.out.println(i));
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		//testJongoInsert();
 		//testJongoFind();
-		testConfiguration();
+		testJongoDistinct();
 	}
 
 }

@@ -137,7 +137,8 @@ public class CamelPizzaKebapParser implements IMenuProvider {
 				}
 				
 				Pozycja pozycja = new Pozycja();
-//				Pattern pattern = Pattern.compile("(?<nazwa>\\d+\\.(.*))-(?<opis>.*)");
+				//TODO parsowanie opisu
+//				Pattern pattern = Pattern.compile("(?<nazwa>\\d+\\.(.*)) - (?<opis>.*)");
 //				Matcher matcher = pattern.matcher(nazwaPozycji);
 //				if (matcher.matches()) {
 //					pozycja.setNazwa(matcher.group("nazwa"));

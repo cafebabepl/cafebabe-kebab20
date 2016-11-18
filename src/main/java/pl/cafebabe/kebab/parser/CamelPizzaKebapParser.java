@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Connection;
@@ -81,8 +79,7 @@ public class CamelPizzaKebapParser implements IMenuProvider {
 
 	private Cena parseCena(String x) {
 		try {
-			Cena cena = new Cena();
-//			String kwota = x.replaceAll("zł", "").trim().replace(",", ".");			
+			Cena cena = new Cena();			
 			String kwota = x.replaceAll("zł", "").replace((char) 160, ' ') .trim().replace(",", ".");
 			cena.setKwota(new BigDecimal(kwota).setScale(2, BigDecimal.ROUND_HALF_UP));
 			cena.setWaluta(Waluta.PLN);
@@ -105,7 +102,6 @@ public class CamelPizzaKebapParser implements IMenuProvider {
 //		Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
 
 		//Document doc = Jsoup.connect("http://camelpizza.pl/kebap").get();
-		
 		Connection connection = Jsoup.connect(url);
 		connection.userAgent("Mozilla/5.0");
 		Document doc = connection.get();

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+
 public class Menu {
 
+	//@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date aktualnosc;
 	private Restauracja restauracja;
 	private String tytul;

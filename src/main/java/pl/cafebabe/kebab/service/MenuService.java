@@ -23,7 +23,6 @@ import pl.cafebabe.kebab.mongodb.MongoUtils;
 import pl.cafebabe.kebab.parser.CamelPizzaKebapParser;
 
 @Path("/")
-//@Produces({ "application/json" })
 @Produces({ "application/json;charset=utf-8"})
 public class MenuService {
 
@@ -55,7 +54,7 @@ public class MenuService {
 			Jongo jongo = new Jongo(client.getDB("kebab20"));
 			org.jongo.MongoCollection menus2 = jongo.getCollection("menu-jongo");
 			Menu menu = menus2.findOne().orderBy("{aktualnosc: -1}").as(Menu.class);
-			//TODO jak Jackson datę parsuje do w jax-rs dostaję liczbę!
+			//TODO jak Jackson datę parsuje bo w jax-rs dostaję liczbę!
 			return menu;
 		}
 	}

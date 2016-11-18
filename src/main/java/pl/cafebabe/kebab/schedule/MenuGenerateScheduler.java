@@ -36,6 +36,7 @@ public class MenuGenerateScheduler {
 				System.out.println(wr.getUpsertedId());
 			}
 		} catch (Exception ex) {
+			//TODO zrobić powiadamianie, np. przez emaila, jeśli wystąpi błąd
 			ex.printStackTrace();
 		}
 	}

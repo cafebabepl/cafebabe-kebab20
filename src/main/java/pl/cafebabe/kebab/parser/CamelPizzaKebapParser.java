@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -64,13 +65,13 @@ public class CamelPizzaKebapParser implements IMenuProvider {
 		menu.setRestauracja(restauracja);
 
 		String[][] grupy = {
-			{ "Pizza", "http://camelpizza.pl/pizza/" },
+			{ "Pizza", "http://camelpizza.pl/pizza" },
 			{ "Kebab", "http://camelpizza.pl/kebap" },
-			{ "Obiady", "http://camelpizza.pl/obiady/" },
-			{ "Spaghetti", "http://camelpizza.pl/spaghetti/" },
-			{ "Burger", "http://camelpizza.pl/burgery/" },
-			{ "Sałatki", "http://camelpizza.pl/salatki/" },
-			{ "Dla malucha", "http://camelpizza.pl/dla-malucha/"},
+			{ "Obiady", "http://camelpizza.pl/obiady" },
+			{ "Spaghetti", "http://camelpizza.pl/spaghetti" },
+			{ "Burger", "http://camelpizza.pl/burgery" },
+			{ "Sałatki", "http://camelpizza.pl/salatki" },
+			{ "Dla malucha", "http://camelpizza.pl/dla-malucha"},
 		};
 		for (String[] i : grupy) {
 			menu.getGrupy().add(getGrupa(i[0], i[1]));
@@ -104,7 +105,10 @@ public class CamelPizzaKebapParser implements IMenuProvider {
 //		Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
 
 		//Document doc = Jsoup.connect("http://camelpizza.pl/kebap").get();
-		Document doc = Jsoup.connect(url).get();
+		
+		Connection connection = Jsoup.connect(url);
+		connection.userAgent("Mozilla/5.0");
+		Document doc = connection.get();
 		
 		Elements e = doc.select("div.post-entry").select("tr");
 		// e.stream().forEach(i -> System.out.println(i.toString()));

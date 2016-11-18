@@ -3,6 +3,7 @@ package pl.cafebabe.kebab.service;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -21,10 +22,14 @@ import pl.cafebabe.kebab.model.Menu;
 import pl.cafebabe.kebab.model.Pozycja;
 import pl.cafebabe.kebab.mongodb.MongoUtils;
 import pl.cafebabe.kebab.parser.CamelPizzaKebapParser;
+import pl.cafebabe.kebab.schedule.MenuGenerateScheduler;
 
 @Path("/")
 @Produces({ "application/json;charset=utf-8"})
 public class MenuService {
+	
+	@EJB
+	MenuGenerateScheduler scheduler;
 
 	public Menu menu1() throws Exception {
 		// A. parsowanie za każdym razem
@@ -44,6 +49,14 @@ public class MenuService {
 			Menu menu = gson.fromJson(tresc, Menu.class);
 			return menu;
 		}
+	}
+	
+	
+	@GET
+	@Path("parse")
+	public String parse() throws Exception {
+		scheduler.execute();
+		return "Done";
 	}
 
 	@GET

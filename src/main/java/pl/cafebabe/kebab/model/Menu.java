@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 public class Menu {
-
+	//TODO to działa, ale wolałbym globalnie przez ObjectMappera
 	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date aktualnosc;
 	private Restauracja restauracja;
